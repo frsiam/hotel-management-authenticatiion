@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "categori": "standared",
+        "name": "Shapla",
+        "rate": 300,
+        "img": "https://i.ibb.co/dcc4DYR/room1.png"
+    },
+    {
+        "id": 2,
+        "categori": "standared",
+        "name": "Duyel",
+        "rate": 400,
+        "img": "https://i.ibb.co/pnGnsrW/room2.png"
+    },
+    {
+        "id": 3,
+        "categori": "delux",
+        "name": "Ilish",
+        "rate": 800,
+        "img": "https://i.ibb.co/SNmnN27/room3.png"
+    },
+    {
+        "id": 4,
+        "categori": "delux",
+        "name": "Katla",
+        "rate": 1000,
+        "img": "https://i.ibb.co/X2hvKWK/room4.png"
+    },
+    {
+        "id": 5,
+        "categori": "delux sweet",
+        "name": "Star",
+        "rate": 1200,
+        "img": "https://i.ibb.co/TWX3zsc/room5.png"
+    },
+    {
+        "id": 6,
+        "categori": "delux sweet",
+        "name": "Banana",
+        "rate": 1500,
+        "img": "https://i.ibb.co/f9PgL03/room6.png"
+    }
+]

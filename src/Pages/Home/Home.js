@@ -1,11 +1,10 @@
 import React from 'react';
-import Services from '../Services/Services';
+import banner from '../../images/banner.png'
 
 const Home = () => {
     return (
         <div>
-            <h1>This is Home page</h1>
-            <Services/>
+            <img src={banner} className='vw-100 vh-100' alt="" />
         </div>
     );
 };
