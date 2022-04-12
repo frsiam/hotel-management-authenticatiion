@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
@@ -22,10 +22,8 @@ const SignIn = () => {
     const handleGoogleLogIn = () => {
         signInWithPopup(auth, googleProvider)
         .then(res => {
-            const user = res.user;
             console.log('from google')
             setUser(user)
-            console.log(user)
         })
         .catch(error => {
             console.error(error)
@@ -34,9 +32,7 @@ const SignIn = () => {
     const handleGithubLogIn = () => {
         signInWithPopup(auth, githubProvider)
         .then(res => {
-            const user = res.user;
             console.log('from github')
-            console.log(user)
         })
         .catch(error => {
             console.error(error)
