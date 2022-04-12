@@ -1,14 +1,28 @@
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import React from 'react';
+import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import React, { useState } from 'react';
 import auth from '../../firebase.init';
 
 const SignIn = () => {
     const googleProvider = new GoogleAuthProvider();
+    const githubProvider = new GithubAuthProvider()
+    const [registered, setRegistered] = useState()
 
     const handleGoogleLogIn = () => {
         signInWithPopup(auth, googleProvider)
         .then(res => {
             const user = res.user;
+            console.log('from google')
+            console.log(user)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
+    const handleGithubLogIn = () => {
+        signInWithPopup(auth, githubProvider)
+        .then(res => {
+            const user = res.user;
+            console.log('from github')
             console.log(user)
         })
         .catch(error => {
@@ -26,9 +40,13 @@ const SignIn = () => {
         console.log('form submit');
         event.preventDefault();
     }
+    const handleRegistered = event => {
+        console.log(event.target.checked)
+        setRegistered(event.target.checked)
+    }
     return (
         <div className='container mt-5'>
-            <div className='w-50 mx-auto border border-2 border-warning p-3'>
+            <div className='w-50 mx-auto border border-2 border-warning p-5'>
                 <div className='bg-info border-0 rounded text-center py-1 mb-3'>
                     <h2>Sign In</h2>
                 </div>
@@ -43,7 +61,7 @@ const SignIn = () => {
                         <input onBlur={handlePassword} type="password" className="form-control" id="exampleInputPassword1" />
                     </div>
                     <div className="mb-3 form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                        <input onChange={handleRegistered} type="checkbox" className="form-check-input" id="exampleCheck1" />
                         <label className="form-check-label">Create an account</label>
                     </div>
                     <div className='text-center'>
@@ -57,6 +75,9 @@ const SignIn = () => {
                 </div>
                 <div className='my-1 text-center'>
                     <button onClick={handleGoogleLogIn} className='btn btn-secondary w-100'>Sign In with Google</button>
+                </div>
+                <div className='my-2 text-center'>
+                    <button onClick={handleGithubLogIn} className='btn btn-dark w-100'>Sign In with GitHub</button>
                 </div>
             </div>
         </div>
