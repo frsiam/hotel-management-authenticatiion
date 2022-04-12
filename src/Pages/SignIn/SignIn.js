@@ -1,22 +1,30 @@
 import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 
 const SignIn = () => {
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider()
     const [registered, setRegistered] = useState(false)
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [user, setUser] = useState({})
+
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || '/';
+
+    if(user){
+        navigate(from, {replace: true})
+    }
+    // navigate('/signin')
 
     // create new user
-
     const handleGoogleLogIn = () => {
         signInWithPopup(auth, googleProvider)
         .then(res => {
             const user = res.user;
             console.log('from google')
+            setUser(user)
             console.log(user)
         })
         .catch(error => {
@@ -36,25 +44,16 @@ const SignIn = () => {
     }
 
     const handleName = event => {
-        setName(event.target.value);
+        console.log()(event.target.value);
     }
     const handleEmail = event => {
-        setEmail(event.target.value);
+        console.log()(event.target.value);
     }
     const handlePassword = event => {
-        setPassword(event.target.value);
+        console.log()(event.target.value);
     }
     const handleFormSubmit = event => {
         console.log('form submit');
-        event.preventDefault();
-        createUserWithEmailAndPassword(auth, email, password)
-        .then(res => {
-            const user = res.user;
-            console.log(user)
-        })
-        .catch(error => {
-            console.error(error)
-        })
     }
     const handleRegistered = event => {
         console.log(event.target.checked)
