@@ -1,11 +1,16 @@
-import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import React, { useState } from 'react';
 import auth from '../../firebase.init';
 
 const SignIn = () => {
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider()
-    const [registered, setRegistered] = useState()
+    const [registered, setRegistered] = useState(false)
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    // create new user
 
     const handleGoogleLogIn = () => {
         signInWithPopup(auth, googleProvider)
@@ -30,15 +35,26 @@ const SignIn = () => {
         })
     }
 
+    const handleName = event => {
+        setName(event.target.value);
+    }
     const handleEmail = event => {
-        console.log(event.target.value);
+        setEmail(event.target.value);
     }
     const handlePassword = event => {
-        console.log(event.target.value);
+        setPassword(event.target.value);
     }
     const handleFormSubmit = event => {
         console.log('form submit');
         event.preventDefault();
+        createUserWithEmailAndPassword(auth, email, password)
+        .then(res => {
+            const user = res.user;
+            console.log(user)
+        })
+        .catch(error => {
+            console.error(error)
+        })
     }
     const handleRegistered = event => {
         console.log(event.target.checked)
@@ -47,14 +63,18 @@ const SignIn = () => {
     return (
         <div className='container mt-5'>
             <div className='w-50 mx-auto border border-2 border-warning p-5'>
-                <div className='bg-info border-0 rounded text-center py-1 mb-3'>
-                    <h2>Sign In</h2>
+                <div className='bg-dark border-0 rounded text-center py-1 mb-3'>
+                    <h2 className='text-info'>Please {registered ? 'Sign Up' : 'Sign In'}</h2>
                 </div>
                 <form onSubmit={handleFormSubmit}>
+                    {registered && <div className="mb-3">
+                        <label className="form-label">Your Name</label>
+                        <input onBlur={handleName} type="text" className="form-control" />
+                    </div>}
                     <div className="mb-3">
                         <label className="form-label">Email address</label>
                         <input onBlur={handleEmail} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                        {registered && <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>}
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Password</label>
@@ -65,18 +85,18 @@ const SignIn = () => {
                         <label className="form-check-label">Create an account</label>
                     </div>
                     <div className='text-center'>
-                        <button type="submit" className="btn btn-primary w-100">Submit</button>
+                        <button type="submit" className="btn btn-primary w-100">{registered ? 'Sign Up' : 'Sign In'}</button>
                     </div>
                 </form>
                 <div className='d-flex justify-content-center mt-1'>
                     <div className='w-25'><hr /></div>
-                    <div className='mx-3'><span>or</span></div>
+                    <div className='mx-3'><span className='fs-4'>or</span></div>
                     <div className='w-25'><hr /></div>
                 </div>
                 <div className='my-1 text-center'>
                     <button onClick={handleGoogleLogIn} className='btn btn-secondary w-100'>Sign In with Google</button>
                 </div>
-                <div className='my-2 text-center'>
+                <div className='my-4 text-center'>
                     <button onClick={handleGithubLogIn} className='btn btn-dark w-100'>Sign In with GitHub</button>
                 </div>
             </div>
